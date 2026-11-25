@@ -259,7 +259,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
     // Toolbar Views
     private lateinit var searchView: SearchView
-    private lateinit var buttonSessions: ImageButton
 
     // State for the "Hide tool bar after" timeout (0 = disabled). The countdown starts when the
     // current page is fully loaded, and again whenever the web view regains input focus (e.g. after
@@ -648,7 +647,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // or drawer is opened, assuming tab drawer since that's the only one with sessions button
         if (tabsView is TabsDesktopView || tabsDialog.isShowing || tabsPopup?.isShowing == true || !tabBarInDrawer || drawerOpened) {
             // Use on screen session button as anchor
-            buttonSessions.let { iMenuSessions.show(it) }
+            iBindingToolbarContent.buttonMore.let { iMenuSessions.show(it) }
         }
         else {
             // Otherwise use main menu button as anchor
@@ -683,7 +682,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemTabMenu) { dismiss(); showMenuWebPage() }
 
             // Main menu items
-            onMenuItemClicked(iBinding.menuItemSessions) { dismiss(); executeAction(R.id.action_sessions) }
+            onMenuItemClicked(iBinding.menuItemSessions) { dismiss(); this@WebBrowserActivity.showSessions() }
             onMenuItemClicked(iBinding.menuItemNewTab) { dismiss(); executeAction(R.id.action_new_tab) }
             onMenuItemClicked(iBinding.menuItemIncognito) { dismiss(); executeAction(R.id.action_incognito) }
             onMenuItemClicked(iBinding.menuItemHistory) { dismiss(); executeAction(R.id.action_history) }
@@ -1462,7 +1461,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Add it to proper parent
         addTabsViewToParent()
 
-        buttonSessions = (tabsView as View).findViewById(R.id.action_sessions)
 
         if (verticalTabBar) {
             iBindingToolbarContent.tabsButton.isVisible = true
@@ -2655,10 +2653,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 }
                 return true
             }
-            R.id.action_restore_page -> {
-                tabsManager.recoverClosedTab()
-                return true
-            }
             R.id.action_restore_all_pages -> {
                 tabsManager.recoverAllClosedTabs()
                 return true
@@ -2713,11 +2707,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 return true
             }
 
-            R.id.action_sessions -> {
-                // Show sessions menu
-                showSessions()
-                return true
-            }
 
             else -> return false
         }

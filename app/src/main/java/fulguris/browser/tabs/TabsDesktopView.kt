@@ -70,12 +70,6 @@ class TabsDesktopView @JvmOverloads constructor(
         iBinding.actionCloseAllTabs.isEnabled = webBrowser.getTabModel().allTabs.count()>1
         // If we have more than one tab in our closed tabs list enable restore all pages button
         iBinding.actionRestoreAllPages.isEnabled = ((webBrowser as WebBrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 1
-        // If we have at least one tab in our closed tabs list enable restore page button
-        iBinding.actionRestorePage.isEnabled = ((webBrowser as WebBrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 0
-        // No sessions in incognito mode
-        if (webBrowser.isIncognito()) {
-            iBinding.actionSessions.visibility = View.GONE
-        }
     }
 
 

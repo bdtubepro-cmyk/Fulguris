@@ -304,7 +304,7 @@ class MenuPopupWindow : PopupWindow {
             MenuItemId.TabMenu -> iBinding.menuItemTabMenu.isVisible = true
 
             // Main menu items
-            MenuItemId.Sessions -> iBinding.menuItemSessions.isVisible = true
+            MenuItemId.Sessions -> iBinding.menuItemSessions.isVisible = false
             MenuItemId.Bookmarks -> iBinding.menuItemBookmarks.isVisible = true
             MenuItemId.History -> iBinding.menuItemHistory.isVisible = true
             MenuItemId.Downloads -> iBinding.menuItemDownloads.isVisible = true
